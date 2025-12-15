@@ -18,7 +18,10 @@ const PORT = process.env.PORT || 3000;
 
 // Important: for webhook we need raw body. We'll mount raw body parser on /webhook route only.
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET','POST','PUT','PATCH','DELETE']
+}));
 app.use('/webhook', webhookRoutes);
 app.use(express.json());
 
