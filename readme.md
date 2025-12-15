@@ -21,6 +21,3 @@ Uses environment variables for secrets
 
 Clean JSON responses
 
-product id 2 - 693f7e1ac0377d4860f0d185
-product id - 693f7e1ac0377d4860f0d184
-userid - "693f7ee06e4e69ec4e3f530f"
