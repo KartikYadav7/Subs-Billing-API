@@ -1,22 +1,13 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config/db');
-
-
 const productRoutes = require('./routes/products');
 const authRoutes = require('./routes/auth');
 const subscriptionRoutes = require('./routes/subscriptions');
 const webhookRoutes = require('./routes/webhook');
-
-
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-
-// Important: for webhook we need raw body. We'll mount raw body parser on /webhook route only.
 
 app.use(cors({
   origin: '*',

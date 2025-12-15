@@ -42,9 +42,7 @@ exports.createSubscription = async (req, res) => {
   subscription_id: subscription._id.toString()
 },}
     );
- 
-
-    subscription.stripe_session_id = session.id;
+   subscription.stripe_session_id = session.id;
     await subscription.save();
 
     res.json({ subscription, checkoutUrl: session.url });
