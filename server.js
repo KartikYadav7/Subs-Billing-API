@@ -6,8 +6,10 @@ const productRoutes = require('./routes/products');
 const authRoutes = require('./routes/auth');
 const subscriptionRoutes = require('./routes/subscriptions');
 const webhookRoutes = require('./routes/webhook');
-const app = express();
 const PORT = process.env.PORT || 3000;
+
+const app = express();
+connectDB();
 
 app.use(cors({
   origin: '*',
@@ -23,7 +25,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 
-connectDB();
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
