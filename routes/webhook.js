@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
+const Subscription = require("../models/Subscription");
+const Payment = require("../models/Payment");
+const emailService = require("../services/emailService");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -26,11 +29,6 @@ router.post(
       const subscriptionId =
         session.metadata && session.metadata.subscription_id;
       const paymentIntentId = session.payment_intent;
-
-      // We'll require models and services here
-      const Subscription = require("../models/Subscription");
-      const Payment = require("../models/Payment");
-      const emailService = require("../services/emailService");
 
       try {
         const sub = await Subscription.findById(subscriptionId).populate(
@@ -58,18 +56,18 @@ router.post(
             status: "succeeded",
           });
           await payment.save();
-
-          // Send confirmation email
           await emailService.sendSubscriptionConfirmation(
             sub.user,
             sub,
             sub.products
           );
-          console.log("Subscription payment processed and confirmation email sent.");
+          console.log(
+            "Subscription payment processed and confirmation email sent."
+          );
         }
       } catch (err) {
         console.error("Error handling checkout.session.completed webhook", err);
-        return res.status(500).send();
+        return res.status(500).send(error.message);
       }
     }
 
